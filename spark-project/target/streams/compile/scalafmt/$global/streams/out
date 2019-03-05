@@ -1,3 +1,0 @@
-[0m[[0m[31merror[0m] [0m[0mError in /home/florin/spark-app/spark-project/src/main/scala/org/spark/laur/LDAShakespeare.scala: <input>:12: error: identifier expected but . found[0m
-[0m[[0m[31merror[0m] [0m[0m..filter(_.length > 4).collect()[0m
-[0m[[0m[31merror[0m] [0m[0m                              ^[0m
