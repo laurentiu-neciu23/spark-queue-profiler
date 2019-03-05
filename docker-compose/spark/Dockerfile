@@ -1,0 +1,24 @@
+FROM cluster/hadoop:latest
+
+LABEL Author="Neciu Laurentiu Florin"
+LABEL Email="laurentiuflorinneciu@gmail.com"
+
+ENV SPARK_VERSION 2.4.0
+ENV SPARK_PACKAGE spark-${SPARK_VERSION}-bin-without-hadoop
+ENV SPARK_HOME /usr/spark-${SPARK_VERSION}
+ENV SPARK_DIST_CLASSPATH="$HADOOP_PREFIX/etc/hadoop/*:$HADOOP_PREFIX/share/hadoop/common/lib/*:$HADOOP_PREFIX/share/hadoop/common/*:$HADOOP_PREFIX/share/hadoop/hdfs/*:$HADOOP_PREFIX/share/hadoop/hdfs/lib/*:$HADOOP_PREFIX/share/hadoop/hdfs/*:$HADOOP_PREFIX/share/hadoop/yarn/lib/*:$HADOOP_PREFIX/share/hadoop/yarn/*:$HADOOP_PREFIX/share/hadoop/mapreduce/lib/*:$HADOOP_PREFIX/share/hadoop/mapreduce/*:$HADOOP_PREFIX/share/hadoop/tools/lib/*"
+ENV PATH $PATH:${SPARK_HOME}/bin
+
+RUN mkdir -p /spark-shared
+VOLUME /spark-shared
+
+# https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-without-hadoop.tgz
+
+RUN curl -sL \
+  "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/${SPARK_PACKAGE}.tgz" \
+  | gunzip \
+  | tar x -C /usr/ \
+ && mv /usr/$SPARK_PACKAGE $SPARK_HOME \
+&& chown -R root:root $SPARK_HOME
+
+CMD ["tail", "-f", "/dev/null"]

@@ -1,0 +1,21 @@
+[0m[[0m[0minfo[0m] [0m[0mPackaging /home/florin/spark-app/spark-project/target/scala-2.11/spark-laur_2.11-0.28.0.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SparkWordCount$$anonfun$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/florin/spark-app/spark-project/target/scala-2.11/classes/SparkWordCount$$anonfun$2.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SparkWordCount$$anonfun$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/florin/spark-app/spark-project/target/scala-2.11/classes/SparkWordCount$$anonfun$4.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SparkWordCount.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/florin/spark-app/spark-project/target/scala-2.11/classes/SparkWordCount.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SparkWordCount$$anonfun$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/florin/spark-app/spark-project/target/scala-2.11/classes/SparkWordCount$$anonfun$3.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SparkWordCount$$anonfun$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/florin/spark-app/spark-project/target/scala-2.11/classes/SparkWordCount$$anonfun$1.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SparkWordCount$$anonfun$5.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/florin/spark-app/spark-project/target/scala-2.11/classes/SparkWordCount$$anonfun$5.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SparkWordCount$$anonfun$6.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/florin/spark-app/spark-project/target/scala-2.11/classes/SparkWordCount$$anonfun$6.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SparkWordCount$$anonfun$7.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/florin/spark-app/spark-project/target/scala-2.11/classes/SparkWordCount$$anonfun$7.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	SparkWordCount$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/florin/spark-app/spark-project/target/scala-2.11/classes/SparkWordCount$.class[0m
+[0m[[0m[0minfo[0m] [0m[0mDone packaging.[0m

@@ -1,0 +1,67 @@
+version: '2'
+
+services:
+  spark:
+    build: ./spark
+    hostname: spark
+    container_name: spark
+    volumes:
+      - ./spark-shared:/spark-shared
+
+  namenode:
+    build: ./namenode
+    hostname: namenode
+    container_name: namenode
+    volumes:
+      - ./data/namenode:/hadoop/dfs/name
+
+  namenode:
+    build: ./namenode
+    hostname: namenode
+    container_name: namenode
+    volumes:
+      - ./data/namenode:/hadoop/dfs/name
+
+  datanode1:
+    build: ./datanode
+    hostname: datanode1
+    container_name: datanode1
+    depends_on:
+      - "namenode"
+    links:
+      - "namenode"
+    volumes:
+      - ./data/datanode1:/hadoop/dfs/data
+
+  resourcemanager:
+    build: ./resourcemanager
+    hostname: resourcemanager
+    container_name: resourcemanager
+    ports:
+      - 8088:8088
+    depends_on:
+      - "namenode"
+    links:
+      - "namenode"
+
+  nodemanager1:
+    build: ./nodemanager
+    hostname: nodemanager1
+    container_name: nodemanager1
+    depends_on:
+      - "namenode"
+      - "resourcemanager"
+    links:
+      - "namenode"
+      - "resourcemanager"
+
+  nodemanager2:
+    build: ./nodemanager
+    hostname: nodemanager2
+    container_name: nodemanager2
+    depends_on:
+      - "namenode"
+      - "resourcemanager"
+    links:
+      - "namenode"
+      - "resourcemanager"
