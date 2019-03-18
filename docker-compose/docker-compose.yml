@@ -5,22 +5,11 @@ services:
     build: ./spark
     hostname: spark
     container_name: spark
-    volumes:
-      - ./spark-shared:/spark-shared
 
   namenode:
     build: ./namenode
     hostname: namenode
     container_name: namenode
-    volumes:
-      - ./data/namenode:/hadoop/dfs/name
-
-  namenode:
-    build: ./namenode
-    hostname: namenode
-    container_name: namenode
-    volumes:
-      - ./data/namenode:/hadoop/dfs/name
 
   datanode1:
     build: ./datanode
@@ -30,8 +19,16 @@ services:
       - "namenode"
     links:
       - "namenode"
-    volumes:
-      - ./data/datanode1:/hadoop/dfs/data
+
+  datanode2:
+    build: ./datanode
+    hostname: datanode2
+    container_name: datanode2
+    depends_on:
+      - "namenode"
+    links:
+      - "namenode"
+
 
   resourcemanager:
     build: ./resourcemanager

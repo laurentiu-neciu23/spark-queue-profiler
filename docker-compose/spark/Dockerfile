@@ -9,8 +9,7 @@ ENV SPARK_HOME /usr/spark-${SPARK_VERSION}
 ENV SPARK_DIST_CLASSPATH="$HADOOP_PREFIX/etc/hadoop/*:$HADOOP_PREFIX/share/hadoop/common/lib/*:$HADOOP_PREFIX/share/hadoop/common/*:$HADOOP_PREFIX/share/hadoop/hdfs/*:$HADOOP_PREFIX/share/hadoop/hdfs/lib/*:$HADOOP_PREFIX/share/hadoop/hdfs/*:$HADOOP_PREFIX/share/hadoop/yarn/lib/*:$HADOOP_PREFIX/share/hadoop/yarn/*:$HADOOP_PREFIX/share/hadoop/mapreduce/lib/*:$HADOOP_PREFIX/share/hadoop/mapreduce/*:$HADOOP_PREFIX/share/hadoop/tools/lib/*"
 ENV PATH $PATH:${SPARK_HOME}/bin
 
-RUN mkdir -p /spark-shared
-VOLUME /spark-shared
+RUN mkdir -p /spark-benchmarks
 
 # https://archive.apache.org/dist/spark/spark-2.4.0/spark-2.4.0-bin-without-hadoop.tgz
 
@@ -29,8 +28,8 @@ ENV SPARK_BENCH_HOME /usr/spark-bench
 ENV SPARK_BENCH_PACKAGE spark-bench_2.3.0_0.4.0-RELEASE_99.tgz
 ENV SPARK_BENCH_PACKAGE_NAME spark-bench_2.3.0_0.4.0-RELEASE
 
-ENV PATH $PATH:${SPARK_BENCH_HOME}/bin
-RUN mkdir -p SPARK_BENCH_HOME
+ENV PATH $PATH:${SPARK_BENCH_HOME}/${SPARK_BENCH_PACKAGE_NAME}/bin
+RUN mkdir -p $SPARK_BENCH_HOME
 
 RUN curl -sL \
   "https://github.com/CODAIT/spark-bench/releases/download/v99/${SPARK_BENCH_PACKAGE}" \
@@ -38,5 +37,8 @@ RUN curl -sL \
   | tar x -C /usr/ \
  && mv /usr/$SPARK_BENCH_PACKAGE_NAME $SPARK_BENCH_HOME \
 && chown -R root:root $SPARK_BENCH_HOME
+
+#start spark ssh server
+RUN /etc/init.d/ssh start
 
 CMD ["tail", "-f", "/dev/null"]

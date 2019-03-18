@@ -8,7 +8,7 @@ RUN apt-get update
 
 # Install java
 RUN apt-get install -y --no-install-recommends openjdk-8-jdk
-
+RUN apt-get install -y ssh
 # Install python for required apps
 RUN apt-get install -y python-pip
 RUN pip install yq
@@ -45,7 +45,7 @@ COPY ./config/core-site.xml /etc/hadoop/core-site.xml
 COPY ./config/hdfs-site.xml /etc/hadoop/hdfs-site.xml
 COPY ./config/mapred-site.xml /etc/hadoop/mapred-site.xml
 COPY ./config/yarn-site.xml /etc/hadoop/yarn-site.xml
-COPY ./config/capacity-scheduler.xml /etc/hadoop/capacity-scheduler.xml
+# COPY ./config/capacity-scheduler.xml /etc/hadoop/capacity-scheduler.xml
 
 
 
