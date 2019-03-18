@@ -1,0 +1,49 @@
+version: '2'
+
+services:
+  spark-master:
+    build: ./spark-master
+    hostname: spark-master
+    container_name: spark-master
+
+  spark-worker1:
+    build: ./spark-worker
+    hostname: spark-worker1
+    container_name:  spark-worker1
+    depends_on:
+      - "spark-master"
+    links:
+      - "spark-master"
+
+  spark-worker2:
+    build: ./spark-worker
+    hostname: spark-worker2
+    container_name:  spark-worker2
+    depends_on:
+      - "spark-master"
+    links:
+      - "spark-master"
+
+  namenode:
+    build: ./namenode
+    hostname: namenode
+    container_name: namenode
+
+  datanode1:
+    build: ./datanode
+    hostname: datanode1
+    container_name: datanode1
+    depends_on:
+      - "namenode"
+    links:
+      - "namenode"
+
+  datanode2:
+    build: ./datanode
+    hostname: datanode2
+    container_name: datanode2
+    depends_on:
+      - "namenode"
+    links:
+      - "namenode"
+
