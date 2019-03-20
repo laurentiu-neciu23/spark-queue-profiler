@@ -30,5 +30,32 @@ function benchmark {
     rm -rf ./results
 }
 
-benchmark 'yarn'
-benchmark 'local'
+function singleton_benchmark {
+
+    rm -rf "./tmp"
+
+    # Generators and executors (generators are the same)
+    generate="singleton-kmeans-generate.$1.conf"
+    execute="singleton-kmeans-execute.$1.conf"
+    regex="^|.*"
+
+    mkdir -p "./tmp/"
+    docker cp ./workflows spark:/spark-benchmarks
+
+    echo "=========== GENERATION ==========="
+    docker exec -t spark spark-bench.sh /spark-benchmarks/workflows/$generate
+
+    echo "=========== EXECUTION AND REDIRECT ==========="
+    docker exec -t spark spark-bench.sh /spark-benchmarks/workflows/$execute > "./tmp/temporary_console_data"
+    cat "./tmp/temporary_console_data" | grep $regex | tr -d " " | tr "|" "," | cut -d, -f2- > "./tmp/unsanitized_dataset"
+    
+    rm -rf ./res
+    python split.py
+    mv ./res ../results.$1
+
+    rm -rf "./tmp"
+
+}
+
+#singleton_benchmark 'local'
+singleton_benchmark 'yarn'

@@ -38,6 +38,10 @@ RUN curl -sL \
  && mv /usr/$SPARK_BENCH_PACKAGE_NAME $SPARK_BENCH_HOME \
 && chown -R root:root $SPARK_BENCH_HOME
 
+ENV SPARK_JARS /usr/spark-bench/spark-bench_2.3.0_0.4.0-RELEASE/lib
+COPY ./jars/spark-bench-2.3.0_0.4.0-RELEASE.jar ${SPARK_JARS}
+COPY ./jars/spark-bench-launch-2.3.0_0.4.0-RELEASE.jar ${SPARK_JARS}
+
 #start spark ssh server
 RUN /etc/init.d/ssh start
 

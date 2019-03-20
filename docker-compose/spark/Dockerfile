@@ -27,9 +27,9 @@ ENV SPARK_BENCH_HOME /usr/spark-bench
 # This is stupid move this to something else
 ENV SPARK_BENCH_PACKAGE spark-bench_2.3.0_0.4.0-RELEASE_99.tgz
 ENV SPARK_BENCH_PACKAGE_NAME spark-bench_2.3.0_0.4.0-RELEASE
-
 ENV PATH $PATH:${SPARK_BENCH_HOME}/${SPARK_BENCH_PACKAGE_NAME}/bin
 RUN mkdir -p $SPARK_BENCH_HOME
+
 
 RUN curl -sL \
   "https://github.com/CODAIT/spark-bench/releases/download/v99/${SPARK_BENCH_PACKAGE}" \
@@ -37,6 +37,10 @@ RUN curl -sL \
   | tar x -C /usr/ \
  && mv /usr/$SPARK_BENCH_PACKAGE_NAME $SPARK_BENCH_HOME \
 && chown -R root:root $SPARK_BENCH_HOME
+
+ENV SPARK_JARS /usr/spark-bench/spark-bench_2.3.0_0.4.0-RELEASE/lib
+COPY ./jars/spark-bench-2.3.0_0.4.0-RELEASE.jar ${SPARK_JARS}
+COPY ./jars/spark-bench-launch-2.3.0_0.4.0-RELEASE.jar ${SPARK_JARS}
 
 #start spark ssh server
 RUN /etc/init.d/ssh start
