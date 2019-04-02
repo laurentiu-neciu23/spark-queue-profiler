@@ -57,5 +57,5 @@ function singleton_benchmark {
 
 }
 
-#singleton_benchmark 'local'
-singleton_benchmark 'yarn'
+singleton_benchmark "local"
+singleton_benchmark "yarn"
