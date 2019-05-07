@@ -17,6 +17,8 @@ services:
     build: ./datanode
     hostname: datanode1
     container_name: datanode1
+    ports: 
+      - 9103:9100
     depends_on:
       - "namenode"
     links:
