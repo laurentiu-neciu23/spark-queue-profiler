@@ -57,5 +57,51 @@ function singleton_benchmark {
 
 }
 
-singleton_benchmark "local"
-singleton_benchmark "yarn"
+
+function generate_hdfs_data {
+    generate="kmeans-generate.yarn.conf"
+    docker cp ./workflows spark:/spark-benchmarks
+
+    # Generate 
+    docker exec -t spark spark-bench.sh /spark-benchmarks/workflows/$generate
+}
+
+# Function to load sql
+# Function to load kmeans
+# Function to load pi
+function load {
+    execute="load.$1.conf"
+    docker exec -t spark spark-bench.sh /spark-benchmarks/workflows/$execute
+
+    docker exec -i spark hdfs dfs -get /spark-shared/ /
+    docker cp spark:/spark-shared ./results
+
+    # copy results outside folder 
+    cp -r ./results ../results.$1
+
+    # discard results
+    rm -rf ./results
+}
+
+if [ "$1" == "--function"  ]
+then
+    if [ "$2" == "generate" ]
+    then
+        generate_hdfs_data
+    fi
+
+    if [ "$2" == "sql" ]
+    then
+        load "sql"
+    fi
+
+    if [ "$2" == "kmeans" ]
+    then
+        load "kmeans"
+    fi
+
+    if [ "$2" == "pi" ]
+    then
+        load "pi"
+    fi
+fi

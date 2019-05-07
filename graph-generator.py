@@ -46,17 +46,17 @@ def total_runtime_mean(path):
 def df_timestamps(path):
     df = pd.read_csv(path)
     if df.columns.contains('total_Runtime'):
-        return pd.read_csv(path)[['timestamp', 'total_Runtime']]
+        return pd.read_csv(path)[['timestamp', 'total_Runtime']]/1000000000
     else:
-        return pd.read_csv(path)[['timestamp', 'total_runtime']]
+        return pd.read_csv(path)[['timestamp', 'total_runtime']]/1000000000
 
 
 def df_runtimes(path):
     df = pd.read_csv(path)
     if df.columns.contains('total_Runtime'):
-        return pd.read_csv(path).total_Runtime
+        return pd.read_csv(path).total_Runtime/1000000000
     else:
-        return pd.read_csv(path).total_runtime
+        return pd.read_csv(path).total_runtime/1000000000
 
 def draw_timeline(data):
     num_samples = 200
@@ -68,7 +68,7 @@ def draw_timeline(data):
         start_index = 0
         plt.clf()
         plt.title("Timeline of execution.")
-        plt.xlabel("Elapsed time (ns).")
+        plt.xlabel("Elapsed time (s).")
         plt.ylabel("Job id.")
 
         for graph in graph_keys:
@@ -78,18 +78,19 @@ def draw_timeline(data):
             xs_finish = data[environment][graph].ix[:, 1]
             ys = range(start_index, start_index + len(xs_finish))
             start_index = start_index + len(xs_finish)
+
             for i in xrange(len(xs_start)):
-                start = xs_start[i]
+                start = normalised_xs_start[i]
                 finish = xs_finish[i]
                 lp = np.linspace(start, finish + start, num_samples)
                 plt.plot(lp, np.repeat(ys[i], num_samples), colors[color])
             color += 1
 
         sql = mpatches.Patch(color='red', label='sql')
-        cpu = mpatches.Patch(color='green', label='cpu')
+        cpu = mpatches.Patch(color='green', label='pi')
         kmeans = mpatches.Patch(color='blue', label='kmeans')
         plt.legend(handles=[sql, cpu, kmeans])
-        plt.savefig("timeline_" + environment + ".png")
+        plt.savefig("timeline_" + environment + ".pdf")
 
 
 
@@ -107,7 +108,7 @@ def draw_dotted_graphs(data):
             plt.plot(normalised_xs, ys, 'o')
 
         plt.legend(graph_keys)
-        plt.savefig("timeline_" + environment + ".png")
+        plt.savefig("timeline_" + environment + ".pdf")
 
 def draw_runtime_graphs(data):
     for environment in data.keys():
@@ -117,7 +118,7 @@ def draw_runtime_graphs(data):
         plt.clf()
         plt.title("Runtime of execution")
         plt.xlabel("Job ID")
-        plt.ylabel("Execution time (ns)")
+        plt.ylabel("Execution time (s)")
         for graph in graph_keys:
             xs = data[environment][graph].values
             ys = range(start_index, start_index + len(xs))
@@ -125,7 +126,7 @@ def draw_runtime_graphs(data):
             plt.plot(ys, xs, 'o')
         plt.legend(graph_keys)
         
-        plt.savefig("runtime_" + environment + ".png")
+        plt.savefig("runtime_" + environment + ".pdf")
 
 
 def draw_comparative_graphs(runtime_means):
@@ -140,7 +141,7 @@ def draw_comparative_graphs(runtime_means):
         plt.bar(indices, means)
         plt.title(graph_key)
         plt.xticks(indices, environments)
-        plt.savefig(graph_key + ".png")
+        plt.savefig(graph_key + ".pdf")
 
 if __name__ == "__main__":
     main()

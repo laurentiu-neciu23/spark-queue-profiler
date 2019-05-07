@@ -42,7 +42,13 @@ ENV SPARK_JARS /usr/spark-bench/spark-bench_2.3.0_0.4.0-RELEASE/lib
 COPY ./jars/spark-bench-2.3.0_0.4.0-RELEASE.jar ${SPARK_JARS}
 COPY ./jars/spark-bench-launch-2.3.0_0.4.0-RELEASE.jar ${SPARK_JARS}
 
-#start spark ssh server
-RUN /etc/init.d/ssh start
 
-CMD ["tail", "-f", "/dev/null"]
+RUN apt-get install -y wget
+RUN wget https://github.com/prometheus/node_exporter/releases/download/v0.17.0/node_exporter-0.17.0.linux-amd64.tar.gz
+RUN tar xvfz node_exporter-*.*-amd64.tar.gz
+
+EXPOSE 9100
+
+COPY ./start.sh /bin/start.sh
+RUN chmod a+x /bin/start.sh
+CMD ["/bin/start.sh"]

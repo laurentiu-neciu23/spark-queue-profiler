@@ -4,9 +4,9 @@ services:
   spark:
     build: ./spark
     hostname: spark
-    ports: 
-      - 9100:9100
     container_name: spark
+    ports: 
+      - 9102:9100
 
   namenode:
     build: ./namenode
@@ -21,16 +21,6 @@ services:
       - "namenode"
     links:
       - "namenode"
-
-  datanode2:
-    build: ./datanode
-    hostname: datanode2
-    container_name: datanode2
-    depends_on:
-      - "namenode"
-    links:
-      - "namenode"
-
 
   resourcemanager:
     build: ./resourcemanager
@@ -49,17 +39,6 @@ services:
     container_name: nodemanager1
     ports: 
       - 9101:9100
-    depends_on:
-      - "namenode"
-      - "resourcemanager"
-    links:
-      - "namenode"
-      - "resourcemanager"
-
-  nodemanager2:
-    build: ./nodemanager
-    hostname: nodemanager2
-    container_name: nodemanager2
     depends_on:
       - "namenode"
       - "resourcemanager"
